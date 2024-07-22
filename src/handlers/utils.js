@@ -1,8 +1,29 @@
-function generator(count, generatorFuntion) {
-	count = parseInt(count);
-	const data = new Array(count || 1).fill().map(e => generatorFuntion());
+/**
+ * Генерирует данные, используя функцию генератор.
+ * @param {number} count - Число генерируемых данных.
+ * @param {function} generatorFunction - Функция генератор.
+ * @returns {Array} - Массив сгенерированных данных.
+ */
+const generateData = (count, generatorFunction) => {
+	// Проверка на валидность count
+	if (typeof count !== 'number' || count < 0) {
+		throw new Error('Можно использовать только положительные число');
+	}
 
-	return data;
-}
+	// Проверка на валидность generatorFunction
+	if (typeof generatorFunction !== 'function') {
+		throw new Error('generatorFunction не является функцией');
+	}
 
-export default generator;
+	// Генерирование данных
+	const dataArray = Array.from({ length: count }, generatorFunction);
+
+	// Проверка на валидность dataArray
+	if (!dataArray || dataArray.length === 0) {
+		throw new Error('Не получилось сгенерировать данные');
+	}
+
+	return dataArray;
+};
+
+export default generateData;
